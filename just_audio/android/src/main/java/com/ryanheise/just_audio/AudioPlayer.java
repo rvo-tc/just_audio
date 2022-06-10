@@ -87,7 +87,7 @@ public class AudioPlayer implements MethodCallHandler, Player.Listener, Metadata
     private Map<String, MediaSource> mediaSources = new HashMap<String, MediaSource>();
     private IcyInfo icyInfo;
     private IcyHeaders icyHeaders;
-    private int errorCount;
+    // private int errorCount;
     private AudioAttributes pendingAudioAttributes;
     private LoadControl loadControl;
     private LivePlaybackSpeedControl livePlaybackSpeedControl;
@@ -382,18 +382,18 @@ public class AudioPlayer implements MethodCallHandler, Player.Listener, Metadata
             Log.e(TAG, "default PlaybackException: " + error.getMessage());
             sendError(String.valueOf(error.errorCode), error.getMessage());
         }
-        errorCount++;
-        if (player.hasNextMediaItem() && currentIndex != null && errorCount <= 5) {
-            int nextIndex = currentIndex + 1;
-            Timeline timeline = player.getCurrentTimeline();
-            // This condition is due to: https://github.com/ryanheise/just_audio/pull/310
-            if (nextIndex < timeline.getWindowCount()) {
-                // TODO: pass in initial position here.
-                player.setMediaSource(mediaSource);
-                player.prepare();
-                player.seekTo(nextIndex, 0);
-            }
-        }
+        // errorCount++;
+        // if (player.hasNextMediaItem() && currentIndex != null && errorCount <= 5) {
+        //     int nextIndex = currentIndex + 1;
+        //     Timeline timeline = player.getCurrentTimeline();
+        //     // This condition is due to: https://github.com/ryanheise/just_audio/pull/310
+        //     if (nextIndex < timeline.getWindowCount()) {
+        //         // TODO: pass in initial position here.
+        //         player.setMediaSource(mediaSource);
+        //         player.prepare();
+        //         player.seekTo(nextIndex, 0);
+        //     }
+        // }
     }
 
     private void completeSeek() {
@@ -707,7 +707,7 @@ public class AudioPlayer implements MethodCallHandler, Player.Listener, Metadata
             player.stop();
             break;
         }
-        errorCount = 0;
+        // errorCount = 0;
         prepareResult = result;
         updatePosition();
         processingState = ProcessingState.loading;
